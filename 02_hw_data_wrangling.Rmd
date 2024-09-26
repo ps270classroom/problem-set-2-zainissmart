@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 2: Data Wrangling"
-author: Your Name Here
+author: Zain Ashraf
 output: pdf_document
 ---
 
@@ -45,7 +45,16 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 
 ## Answer 1
 
+```{r}
+library(dplyr)
+fb_ads <- read.csv("data/fb_ads.csv")
+incumbency_table <- fb_ads |>
+  head()|>
+  knitr::kable()
+incumbency_table
+```
 
+There are 7,014 candidates in the dataset.
 
 \newpage
 
@@ -55,18 +64,22 @@ Filter the data to just US House and US Senate races and use this to create a ti
 
 Use `knitr::kable()` to produce a nicely formatted table. In this call, set the `digits` arguments to 3 and use the `col.names` argument to pass a nicer set of names. You can use the following as a template:
 
-```{r eval = FALSE}
-knitr::kable(my_table, col.names = c("Variable 1", "Variable 2", ...))
-```
-
 In the writeup, describe which type of candidate sponsored the most promoting ads on average. 
 
  **Rubric**: 3pts for creating `party_incumbent_promote` correctly (autograder); 2pt for a nicely formatted table (PDF); 1pt for changing the column names of the output table (PDF); 1pt for correctly identifying the type of candidate with highest average (PDF)
 
 ## Answer 2
 
-
-
+```{r eval = FALSE}
+party_incumbent_promote <- fb_ads |>
+  filter(office == "US House" | office == "US Senate") |>
+  group_by(party, incumbency) |>
+  summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE)) |>
+  head() |>
+  knitr::kable(col.names = c("Party", "Incumbency", "Promotion"), digits = 3)
+party_incumbent_promote
+```
+The type of candidate with the highest average sponsored self-promotions are incumbent democrats.
 \newpage
 
 ## Question 3 (7 points)
