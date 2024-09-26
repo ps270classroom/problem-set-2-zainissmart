@@ -49,6 +49,7 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 library(dplyr)
 fb_ads <- read.csv("data/fb_ads.csv")
 incumbency_table <- fb_ads |>
+  count(incumbency) |>
   head()|>
   knitr::kable()
 incumbency_table
@@ -93,6 +94,22 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 
 ## Answer 3
 
+```{r}
+fb_ads <- fb_ads |>
+  mutate(impressions_millions = impressions/1000000) 
+
+house_candidates <- fb_ads |>
+  group_by(cand_name_last) |>
+  filter(office == "US House")
+house_candidates
+  
+plot_q3 <- ggplot(data = house_candidates, mapping = aes(x = cand_name_last,
+                                               y = impressions_millions)) +
+geom_col() 
+
+ 
+plot_q3
+```
 
 
 \newpage
@@ -116,6 +133,10 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ## Answer 4
 
+```{r}
+fb_top_plot <- ggplot(data = fb_ads, mapping = aes(x = impressions_millions,
+                                                   y = ))
+```
 
 
 \newpage
