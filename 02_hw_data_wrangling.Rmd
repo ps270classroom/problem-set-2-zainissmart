@@ -47,11 +47,13 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 
 ```{r}
 library(dplyr)
+
 fb_ads <- read.csv("data/fb_ads.csv")
 incumbency_table <- fb_ads |>
   count(incumbency) |>
   head()|>
   knitr::kable()
+
 incumbency_table
 ```
 
@@ -72,12 +74,14 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 ## Answer 2
 
 ```{r eval = FALSE}
+
 party_incumbent_promote <- fb_ads |>
   filter(office == "US House" | office == "US Senate") |>
   group_by(party, incumbency) |>
   summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE)) |>
   head() |>
   knitr::kable(col.names = c("Party", "Incumbency", "Promotion"), digits = 3)
+
 party_incumbent_promote
 ```
 The type of candidate with the highest average sponsored self-promotions are incumbent democrats.
@@ -96,6 +100,7 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 
 ```{r}
 library(ggplot2)
+
 fb_ads <- fb_ads |>
   mutate(impressions_millions = impressions/1000000) 
 
@@ -129,7 +134,22 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ## Answer 4
 
+```{r}
+library(tidyverse) 
 
+fb_top_plot <- fb_ads |>
+  filter(office == "US House") |>
+  slice_max(impressions_millions, n = 15) |>
+  ggplot(mapping = aes(x = impressions_millions,
+                                      y = fct_reorder(cand_name_last, impressions_millions))) +  
+  geom_col(mapping = aes(fill = party)) +
+  scale_fill_manual(values = c(R = "red", D = "blue")) +
+  labs( x = "Impressions (Millions)",
+        y = "Candidate",
+        title = "Top 15 Candidates with Most Impressions")
+
+fb_top_plot
+```
 
 
 \newpage
