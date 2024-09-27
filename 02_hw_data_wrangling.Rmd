@@ -79,9 +79,9 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 party_incumbent_promote <- fb_ads |>
   filter(office == "US House" | office == "US Senate") |>
   group_by(party, incumbency) |>
-  summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE)) |>
-  head() |>
-  knitr::kable(col.names = c("Party", "Incumbency", "Promotion"), digits = 3)
+  summarize(promote_prop = mean(ad_tone_promote, na.rm = TRUE)) 
+
+  knitr::kable(party_incumbent_promote, col.names = c("Party", "Incumbency", "Promotion"), digits = 3)
 
 party_incumbent_promote
 ```
