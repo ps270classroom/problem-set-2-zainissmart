@@ -42,13 +42,13 @@ Load the data using the `read_csv` function and save it as `fb_ads` (using this 
 Use `dplyr` functions to create a table with the number of candidates in each type of incumbency status in the data set. Save this table output as `incumbency_table` (for the autograder). Use the function `knitr::kable()` on this table to have a nicely formatted table produced in the knitted output. 
 
  **Rubric**: 2pt for loading the data (autograder); 1pt for describing the number of candidates (PDF); 3pts for creating the table (autograder); 2pt for using `kable()` to nicely format the output (PDF)
-
 ## Answer 1
 
-```{r}
+```{r, show_col_types = FALSE}
 library(dplyr)
+library(tidyverse)
 
-fb_ads <- read.csv("data/fb_ads.csv")
+fb_ads <- read_csv("data/fb_ads.csv")
 
 incumbency_table <- fb_ads |>
   count(incumbency) |>
