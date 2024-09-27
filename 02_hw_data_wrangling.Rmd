@@ -99,19 +99,14 @@ library(ggplot2)
 fb_ads <- fb_ads |>
   mutate(impressions_millions = impressions/1000000) 
 
-house_candidates <- fb_ads |>
-  group_by(cand_name_last) |>
-  filter(office == "US House")
-house_candidates
-  
-plot_q3 <- ggplot(data = house_candidates, mapping = aes(x = cand_name_last,
-                                               y = impressions_millions)) +
-geom_col() 
+plot_q3 <- fb_ads |>
+  filter(office == "US House") |>
+  ggplot(data = fb_ads, mapping = aes(x = impressions_millions)) +
+  geom_histogram() 
 
- 
 plot_q3
 ```
-
+Most of the House candidates did NOT have more than 10 million ads on Facebook. The histogram is strongly skewed to the right, with the vast majority of the House candidates achieving 0-5 million impressions.
 
 \newpage
 
@@ -134,10 +129,7 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ## Answer 4
 
-```{r}
-fb_top_plot <- ggplot(data = fb_ads, mapping = aes(x = impressions_millions,
-                                                   y = ))
-```
+
 
 
 \newpage
