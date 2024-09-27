@@ -52,7 +52,6 @@ fb_ads <- read.csv("data/fb_ads.csv")
 
 incumbency_table <- fb_ads |>
   count(incumbency) |>
-  head()|>
   knitr::kable(col.names = c("Incumbency Status", "Amount"))
 
 incumbency_table
